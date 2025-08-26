@@ -14,10 +14,6 @@ config/name="Nouveau projet de jeu"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
-[autoload]
-
-DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
-
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/content_forge/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg")
+enabled=PackedStringArray("res://addons/content_forge/plugin.cfg")

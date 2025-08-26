@@ -2,7 +2,7 @@
 
 @tool
 extends EditorPlugin
-const MainView = preload("./editor/main_view/main_view.tscn")
+const MainView = preload("./editor/main_view.tscn")
 
 var main_view
 
@@ -33,7 +33,7 @@ func _make_visible(visible: bool) -> void:
 			main_view.refresh()
 
 func _get_plugin_name() -> String:
-	return "Content"
+	return "Data"
 
 # func _get_plugin_icon() -> Texture2D:
 # 	return load(get_plugin_path("/assets/icon.svg"))
