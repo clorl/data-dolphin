@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://b650o2aekdkkc"]
+
+[ext_resource type="Script" uid="uid://b3jfp7wr4txqv" path="res://addons/content_forge/editor/sheet/cell_header.gd" id="1_kpgoj"]
+
+[node name="CellHeader" type="Button"]
+custom_minimum_size = Vector2(64, 21)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_default_cursor_shape = 2
+script = ExtResource("1_kpgoj")
+
+[node name="ResizeHandle" type="Control" parent="."]
+z_index = 1
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
