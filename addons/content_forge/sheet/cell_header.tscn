@@ -21,6 +21,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 mouse_default_cursor_shape = 2
 theme_override_constants/outline_size = 0
 theme_override_constants/h_separation = 0
@@ -31,13 +32,3 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_dhq0o")
 theme_override_styles/hover = SubResource("StyleBoxFlat_bo8xf")
 theme_override_styles/normal = SubResource("StyleBoxFlat_bo8xf")
 script = ExtResource("1_kpgoj")
-
-[node name="ResizeHandle" type="Control" parent="."]
-z_index = 1
-layout_mode = 1
-anchors_preset = 11
-anchor_left = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 0
-grow_vertical = 2
