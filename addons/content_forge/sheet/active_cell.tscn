@@ -3,10 +3,10 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mp6x0"]
 bg_color = Color(0.221002, 0.469014, 0.819067, 1)
 draw_center = false
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
 border_color = Color(0.204415, 0.481335, 0.839433, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6lf87"]
@@ -23,11 +23,6 @@ corner_detail = 10
 anti_aliasing = false
 
 [node name="ActiveCell" type="Panel"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_mp6x0")
 
 [node name="Handle" type="Button" parent="."]

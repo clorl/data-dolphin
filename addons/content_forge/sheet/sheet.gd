@@ -41,31 +41,24 @@ var _resize_start_pos = Vector2.ZERO
 var _resize_target: Control = null
 var _resize_delta = 0
 
-var _selection: Array[Rect2i]
+var _selection: Array[Rect2i] = []
 
 func _ready():
-	#script_changed.connect(_on_script_changed)
 	if Engine.is_editor_hint() and not self.theme:
 		var editor_theme = EditorInterface.get_editor_theme()
-		self.theme = editor_theme
+		if editor_theme:
+			self.theme = editor_theme
 	custom_minimum_size = size_pixels
 	rebuild()
 
 func _gui_input(event: InputEvent) -> void:
-	# if event is InputEventMouse:
-	# 	match event.as_text():
-	# 		"Ctrl+Mouse Wheel Up", "Command+Mouse Wheel Up":
-	# 			self.font_size += 1
-	# 			get_viewport().set_input_as_handled()
-	# 		"Ctrl+Mouse Wheel Down", "Command+Mouse Wheel Down":
-	# 			self.font_size -= 1
-	# 			get_viewport().set_input_as_handled()
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if event.pressed:
-				var cell = get_cell_at_pos(get_local_mouse_position())
-				_selection = [Rect2i(cell, Vector2i.ONE)]
-				print(str(_selection[0]))
+				return
+				var clicked_cell = get_cell_at_pos(get_local_mouse_position())
+				_selection.clear()
+				_selection.push_back(Rect2i(clicked_cell, Vector2i.ZERO))
 				refresh()
 			else:
 				if _resize_state != ResizeState.NONE:
@@ -93,10 +86,13 @@ func _draw():
 		border_color, BORDER_WIDTH
 		)
 
-	# Selection
-	if selection_stylebox and _selection.size():
-		for rect in _selection:
-			selection_stylebox.draw(get_canvas_item(), grid_rect_to_screen(rect))
+	# Selection 
+	if _selection.size():
+		for sel in _selection:
+			var rect = get_cells_rect(sel)
+			print(str(rect))
+			draw_style_box(selection_stylebox, rect)
+
 
 	# Resize indicator
 	var mouse = get_local_mouse_position()
@@ -117,26 +113,22 @@ func _draw():
 				BORDER_WIDTH * 4
 			)
 
-func _on_header_gui_input(event, separator: Control):
+func _on_header_sep_gui_input(event, separator: Control):
 	if _resize_target != separator: return
 	_resize_delta = _resize_target.get_local_mouse_position()
-	print(str(_resize_delta))
-	queue_redraw()
+	refresh()
 
-func _on_header_mouse_down(separator: Control):
+func _on_header_sep_mouse_down(separator: Control):
 	var is_vertical = separator.get_meta("is_vertical", false)
 	_resize_state = ResizeState.ROW if is_vertical else ResizeState.COL
 	_resize_target = separator
-	queue_redraw()
+	refresh()
 
-func _on_header_mouse_up(separator: Control):
+func _on_header_sep_mouse_up(separator: Control):
 	if _resize_target == separator:
 		_resize_state = ResizeState.NONE
 		_resize_target = null
-		queue_redraw()
-
-func _on_script_changed():
-	rebuild()
+		refresh()
 
 func _make_header_separator(is_vertical: bool):
 	var sep = header_separator_scene.instantiate()
@@ -150,15 +142,26 @@ func _make_header_separator(is_vertical: bool):
 		sep.custom_minimum_size.x = header_drag_area_size.x
 		sep.mouse_default_cursor_shape = Control.CursorShape.CURSOR_HSIZE
 	sep.button_down.connect(func():
-		_on_header_mouse_down(sep)
+		_on_header_sep_mouse_down(sep)
 	)
 	sep.button_up.connect(func():
-		_on_header_mouse_up(sep)
+		_on_header_sep_mouse_up(sep)
 	)
 	sep.gui_input.connect(func(e):
-		_on_header_gui_input(e, sep)
+		_on_header_sep_gui_input(e, sep)
 	)
 	return sep
+
+func _on_header_pressed(node: Control):
+	if node.has_meta("col_idx"):
+		print("foo")
+		_selection.clear()
+		_selection.push_back(Rect2i(0, node.get_meta("col_idx"), ROWS, node.get_meta("col_idx")))
+		print(str(_selection))
+	elif node.has_meta("row_idx"):
+		_selection.clear()
+		_selection.push_back(Rect2i(node.get_meta("row_idx"), 0, node.get_meta("row_idx"), COLS))
+	pass
 
 func rebuild():
 	# Active cell
@@ -182,6 +185,10 @@ func rebuild():
 		if cell is Control:
 			cell.custom_minimum_size = Vector2(CELL_SIZE.x, HEADER_SIZE.y)
 			cell.text = char(KEY_A + (x % 25))
+			cell.set_meta("col_idx", x)
+			cell.pressed.connect(func():
+				_on_header_pressed(cell)
+			)
 			col_headers.add_child(cell)
 			col_headers.add_child(_make_header_separator(false))
 	for y in range(ROWS):
@@ -189,23 +196,26 @@ func rebuild():
 		if cell is Control:
 			cell.custom_minimum_size = Vector2(HEADER_SIZE.x, CELL_SIZE.y)
 			cell.text = str(y+1)
+			cell.set_meta("row_idx", y)
+			cell.pressed.connect(func():
+				_on_header_pressed(cell)
+			)
 			row_headers.add_child(cell)
 			row_headers.add_child(_make_header_separator(true))
 
-	queue_redraw()
-	print("Rebuilt")
+	refresh()
 
 func refresh():
 	active_cell_node.visible = false
-	if _selection.size():
+	if active_cell_node and _selection.size():
 		active_cell_node.visible = true
-		var tail = _selection[_selection.size() - 1]
-		if tail is Rect2:
-			var screen_rect = grid_rect_to_screen(tail)
-			active_cell_node.position = screen_rect.position - Vector2.ONE * BORDER_WIDTH
-			active_cell_node.size = screen_rect.size + Vector2.ONE * BORDER_WIDTH
+		var last = _selection[_selection.size() - 1]
+		var rect = get_cell_rect(last.end)
+		active_cell_node.position = rect.position
+		active_cell_node.custom_minimum_size = rect.size
 	queue_redraw()
 
+# Converts a local position of the Control to the corresponding cell in sheet coordinates
 func get_cell_at_pos(pos: Vector2) -> Vector2i:
 	pos -= grid_offset
 	return Vector2i(pos / CELL_SIZE)
@@ -216,9 +226,6 @@ func get_cell_rect(cell_id: Vector2i) -> Rect2:
 	var cell_pos = Vector2(cell_id) * CELL_SIZE
 	return Rect2(cell_pos + grid_offset, CELL_SIZE)
 
-func grid_rect_to_screen(rect: Rect2i) -> Rect2:
-	var cast = Rect2(rect)
-	var new_rect = Rect2()
-	new_rect.position = cast.position * CELL_SIZE - Vector2.ONE * BORDER_WIDTH
-	new_rect.size = cast.size * CELL_SIZE + Vector2.ONE * BORDER_WIDTH
-	return new_rect
+# Converts a range of cells in sheet coordinates to the bounding rectangle relative to the Control
+func get_cells_rect(rect: Rect2i) -> Rect2:
+	return Rect2(get_cell_rect(rect.position).position, get_cell_rect(rect.end).size)
