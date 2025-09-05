@@ -49,19 +49,22 @@ func _ready():
 		if editor_theme:
 			self.theme = editor_theme
 	custom_minimum_size = size_pixels
-
-	_make_debug_button(func(): run_command("TestCommand", {"foo": "bar"}, true))
 	rebuild()
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if event.pressed:
-				return
-				var clicked_cell = get_cell_at_pos(get_local_mouse_position())
-				_selection.clear()
-				_selection.push_back(Rect2i(clicked_cell, Vector2i.ZERO))
-				refresh()
+				var clicked_pos = get_local_mouse_position()
+				if clicked_pos > grid_offset:
+					var mask = event.get_modifiers_mask()
+					var command = "SelectionSet"
+					var target = Rect2i(get_cell_at_pos(clicked_pos), Vector2i.ZERO)
+					if mask & KEY_MASK_CTRL:
+						command = "SelectionAdd"
+					if mask & KEY_MASK_ALT:
+						target = Rect2i(Vector2i(target.position.x, 0), Vector2i(0, ROWS - 1))
+					run_command(command, { "target":  target})
 			else:
 				if _resize_state != ResizeState.NONE:
 					_resize_state = ResizeState.NONE
@@ -92,7 +95,6 @@ func _draw():
 	if _selection.size():
 		for sel in _selection:
 			var rect = get_cells_rect(sel)
-			print(str(rect))
 			draw_style_box(selection_stylebox, rect)
 
 
@@ -155,38 +157,30 @@ func _make_header_separator(is_vertical: bool):
 	return sep
 
 func _on_header_pressed(node: Control):
-	if node.has_meta("col_idx"):
-		var col_id = node.get_meta("col_idx")
-		var selected = Rect2i()
-		selected.position = Vector2i(col_id, 0)
-		selected.size = Vector2i(1, ROWS)
-		_selection.push_back(selected)
-		print(str(selected))
-	elif node.has_meta("row_idx"):
-		print("huh")
-	refresh()
-
-# Add a debug button to quickly test commands
-func _make_debug_button(callback: Callable, text: String = "Command"):
-	var btn = Button.new()
-	btn.pressed.connect(callback)
-	btn.text = text
-	$DebugCmd.add_child(btn)
+	pass
 
 # First dirty iteration of the command pattern
-func run_command(command_name: StringName, params: Dictionary, is_debug = false):
+func run_command(command_name: StringName, params: Dictionary, is_debug = true):
 	if is_debug:
 		print("-----")
 		print("Command run: " + str(command_name))
 		print(str(params))
 		print("-----")
 	match command_name:
-		"SelectionAdd":
-			pass
 		"SelectionSet":
-			pass
+			if not params.target:
+				return
+			_selection = []
+			_selection.push_back(params.target)
+		"SelectionAdd":
+			if not params.target:
+				return
+			if not _selection:
+				_selection = []
+			_selection.push_back(params.target)
 		_: 
 			print_debug("Unknown command " + str(command_name) + " on " + str(self))
+	refresh()
 
 func rebuild():
 	# Active cell
@@ -237,7 +231,6 @@ func refresh():
 		var last = _selection[_selection.size() - 1]
 		var rect = get_cell_rect(last.end)
 		active_cell_node.position = rect.position
-		active_cell_node.custom_minimum_size = rect.size
 	queue_redraw()
 
 # Converts a local position of the Control to the corresponding cell in sheet coordinates
@@ -251,4 +244,9 @@ func get_cell_rect(cell_id: Vector2i) -> Rect2:
 
 # Converts a range of cells in sheet coordinates to the bounding rectangle relative to the Control
 func get_cells_rect(rect: Rect2i) -> Rect2:
-	return Rect2(get_cell_rect(rect.position).position, get_cell_rect(rect.end).end)
+	var first_cell_rect = get_cell_rect(rect.position)
+	var last_cell_rect = get_cell_rect(rect.end)
+	var final_rect = Rect2()
+	final_rect.position = first_cell_rect.position
+	final_rect.end = last_cell_rect.end
+	return final_rect
