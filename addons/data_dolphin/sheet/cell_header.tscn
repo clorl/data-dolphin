@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://b650o2aekdkkc"]
 
-[ext_resource type="Script" uid="uid://b3jfp7wr4txqv" path="res://addons/content_forge/sheet/cell_header.gd" id="1_kpgoj"]
+[ext_resource type="Script" path="res://addons/data_dolphin/sheet/cell_header.gd" id="1_kpgoj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dhq0o"]
 bg_color = Color(0.214876, 0.214876, 0.214876, 1)

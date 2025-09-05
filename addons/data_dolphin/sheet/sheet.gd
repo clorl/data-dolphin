@@ -49,6 +49,8 @@ func _ready():
 		if editor_theme:
 			self.theme = editor_theme
 	custom_minimum_size = size_pixels
+
+	_make_debug_button(func(): run_command("TestCommand", {"foo": "bar"}, true))
 	rebuild()
 
 func _gui_input(event: InputEvent) -> void:
@@ -163,6 +165,28 @@ func _on_header_pressed(node: Control):
 	elif node.has_meta("row_idx"):
 		print("huh")
 	refresh()
+
+# Add a debug button to quickly test commands
+func _make_debug_button(callback: Callable, text: String = "Command"):
+	var btn = Button.new()
+	btn.pressed.connect(callback)
+	btn.text = text
+	$DebugCmd.add_child(btn)
+
+# First dirty iteration of the command pattern
+func run_command(command_name: StringName, params: Dictionary, is_debug = false):
+	if is_debug:
+		print("-----")
+		print("Command run: " + str(command_name))
+		print(str(params))
+		print("-----")
+	match command_name:
+		"SelectionAdd":
+			pass
+		"SelectionSet":
+			pass
+		_: 
+			print_debug("Unknown command " + str(command_name) + " on " + str(self))
 
 func rebuild():
 	# Active cell

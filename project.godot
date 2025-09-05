@@ -16,4 +16,4 @@ config/icon="res://icon.svg"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/content_forge/plugin.cfg")
+enabled=PackedStringArray("res://addons/data_dolphin/plugin.cfg")
