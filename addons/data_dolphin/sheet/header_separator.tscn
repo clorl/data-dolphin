@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://b15l3r8kku3qv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r5aoa"]
+
+[node name="HeaderSeparator" type="Button"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/focus = SubResource("StyleBoxEmpty_r5aoa")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_r5aoa")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_r5aoa")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_r5aoa")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_r5aoa")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_r5aoa")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_r5aoa")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_r5aoa")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_r5aoa")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_r5aoa")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_r5aoa")
