@@ -10,7 +10,7 @@ enum ResizeState {
 const CELL_SIZE = Vector2(100, 21)
 const HEADER_SIZE = Vector2(64, 24)
 const BORDER_WIDTH = 1
-const COLS = 20
+const COLS = 100
 const ROWS = 100
 
 @export var header_cell_scene: PackedScene
@@ -134,6 +134,9 @@ func _on_header_sep_mouse_up(separator: Control):
 		_resize_target = null
 		refresh()
 
+func _make_header():
+	pass
+
 func _make_header_separator(is_vertical: bool):
 	var sep = header_separator_scene.instantiate()
 	sep.z_index = 100
@@ -156,8 +159,8 @@ func _make_header_separator(is_vertical: bool):
 	)
 	return sep
 
-func _on_header_pressed(node: Control):
-	pass
+func _on_header_pressed(node: DDSheetHeader):
+	print(node.index)
 
 # First dirty iteration of the command pattern
 func run_command(command_name: StringName, params: Dictionary, is_debug = true):
@@ -195,33 +198,25 @@ func rebuild():
 	for child in row_headers.get_children(): child.queue_free()
 
 	col_headers.position.x = HEADER_SIZE.x + BORDER_WIDTH
-	col_headers.add_theme_constant_override("separation",-0.5 * header_drag_area_size.x)
 	row_headers.position.y = HEADER_SIZE.y + BORDER_WIDTH
-	row_headers.add_theme_constant_override("separation",-0.5 * header_drag_area_size.y)
 
 	for x in range(COLS):
 		var cell = header_cell_scene.instantiate()
-		if cell is Control:
+		if cell is DDSheetHeader:
 			cell.custom_minimum_size = Vector2(CELL_SIZE.x, HEADER_SIZE.y)
-			cell.text = char(KEY_A + (x % 25))
+			cell.index = x
 			cell.set_meta("col_idx", x)
-			cell.pressed.connect(func():
-				_on_header_pressed(cell)
-			)
+			cell.pressed.connect(_on_header_pressed)
 			col_headers.add_child(cell)
-			col_headers.add_child(_make_header_separator(false))
 	for y in range(ROWS):
 		var cell = header_cell_scene.instantiate()
-		if cell is Control:
+		if cell is DDSheetHeader:
 			cell.custom_minimum_size = Vector2(HEADER_SIZE.x, CELL_SIZE.y)
-			cell.text = str(y+1)
+			cell.is_row = true
+			cell.index = y
 			cell.set_meta("row_idx", y)
-			cell.pressed.connect(func():
-				_on_header_pressed(cell)
-			)
+			cell.pressed.connect(_on_header_pressed)
 			row_headers.add_child(cell)
-			row_headers.add_child(_make_header_separator(true))
-
 	refresh()
 
 func refresh():

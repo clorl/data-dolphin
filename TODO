@@ -1,0 +1,9 @@
+# Next Steps
+- [ ] Optimize selection array to avoid overlaps
+- [ ] Implement col/header resize
+
+# Roadmap
+- [ ] Make development/hot reload easier
+- [ ] Store a sheet's visual state (row/cols sizes for now)
+- [ ] Implement cell text editing
+- [ ] Undo stack and undofile (add a "undoable" property to commands)
