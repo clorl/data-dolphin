@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://dj1rrgbwnfjd0"]
+
+[ext_resource type="Script" uid="uid://s3q74hrksb0d" path="res://addons/data_dolphin/data_handling/data_container.gd" id="1_chjdf"]
+[ext_resource type="Script" uid="uid://c7q6jo3g7s0gw" path="res://addons/data_dolphin/data_handling/nodes/collection.gd" id="3_7e473"]
+
+[node name="Data" type="Node"]
+script = ExtResource("1_chjdf")
+metadata/_custom_type_script = "uid://s3q74hrksb0d"
+
+[node name="Items" type="Node" parent="."]
+script = ExtResource("3_7e473")
+metadata/_custom_type_script = "uid://c7q6jo3g7s0gw"
+
+[node name="Places" type="Node" parent="."]
+script = ExtResource("3_7e473")
+metadata/_custom_type_script = "uid://c7q6jo3g7s0gw"
+
+[node name="Effects" type="Node" parent="."]
+script = ExtResource("3_7e473")
+metadata/_custom_type_script = "uid://c7q6jo3g7s0gw"
