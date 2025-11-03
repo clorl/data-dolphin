@@ -1,0 +1,1 @@
+class_name DM_ColHeader extends DM_SheetHeader

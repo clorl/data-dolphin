@@ -9,7 +9,7 @@ var main_view
 func _enter_tree() -> void:
 	if not Engine.is_editor_hint():
 		return
-	Engine.set_meta("DataPlugin", self)
+	Engine.set_meta("DataManager", self)
 
 	main_view = MainView.instantiate()
 	EditorInterface.get_editor_main_screen().add_child(main_view)
@@ -18,7 +18,7 @@ func _enter_tree() -> void:
 func _exit_tree() -> void:
 	if is_instance_valid(main_view):
 		main_view.queue_free()
-	Engine.remove_meta("DataPlugin")
+	Engine.remove_meta("DataManager")
 
 func _ready():
 	pass

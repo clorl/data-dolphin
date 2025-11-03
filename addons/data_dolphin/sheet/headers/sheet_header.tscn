@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://qb3asw8slbq2"]
+
+[ext_resource type="Script" uid="uid://beic8qql4xv6m" path="res://addons/data_dolphin/sheet/headers/sheet_header.gd" id="1_h5kkv"]
+
+[node name="SheetHeader" type="Button"]
+offset_right = 8.0
+offset_bottom = 8.0
+script = ExtResource("1_h5kkv")

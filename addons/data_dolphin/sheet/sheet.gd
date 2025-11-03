@@ -13,7 +13,17 @@ const BORDER_WIDTH = 1
 const COLS = 20
 const ROWS = 100
 
+@export_tool_button("Rebuild") var _rebuild_action = rebuild
+@export var cell_count: Vector2i
+
+@export var default_cell_size: Vector2
+@export var row_header_width: float
+
+@export var row_header_scene: PackedScene
+@export var col_header_scene: PackedScene
+
 @export var header_cell_scene: PackedScene
+
 @export var active_cell_scene: PackedScene
 @export var header_separator_scene: PackedScene
 @export var header_drag_area_size := Vector2(10, 24) # The size of the area you grab to resize cols and rows
@@ -43,12 +53,42 @@ var _resize_delta = 0
 
 var _selection: Array[Rect2i] = []
 
+func rebuild():
+	%Corner.custom_minimum_size = Vector2(row_header_width, default_cell_size.y)
+	%Rows.custom_minimum_size.x = row_header_width
+	%Cols.custom_minimum_size.y = default_cell_size.y
+	
+	# Instantiate sheet headers 
+	# TODO: Implement pooling
+	for child in %Rows.get_children():
+		child.queue_free()
+	for child in %Cols.get_children():
+		child.queue_free()
+	
+	var i = 0
+	while i < cell_count.x || i < cell_count.y:
+		if i < cell_count.x:
+			var inst = col_header_scene.instantiate()
+			inst.text = str(i)
+			inst.custom_minimum_size = default_cell_size
+			%Cols.add_child(inst)
+		
+		if i < cell_count.y:
+			var inst = row_header_scene.instantiate()
+			inst.text = str(i)
+			inst.custom_minimum_size = Vector2(row_header_width, default_cell_size.y)
+			%Rows.add_child(inst)
+
+		i += 1
+	refresh()
+
 func _ready():
-	if Engine.is_editor_hint() and not self.theme:
-		var editor_theme = EditorInterface.get_editor_theme()
-		if editor_theme:
-			self.theme = editor_theme
-	custom_minimum_size = size_pixels
+	# if Engine.is_editor_hint() and not self.theme:
+	# 	var editor_theme = EditorInterface.get_editor_theme()
+	# 	if editor_theme:
+	# 		self.theme = editor_theme
+	#custom_minimum_size = size_pixels
+	property_list_changed.connect(rebuild)
 	rebuild()
 
 func _gui_input(event: InputEvent) -> void:
@@ -70,6 +110,7 @@ func _gui_input(event: InputEvent) -> void:
 					_resize_state = ResizeState.NONE
 
 func _draw():
+	return
 	# Background
 	var style = theme.get_stylebox("normal", "PanelBackgroundButton")
 	style.draw(get_canvas_item(), Rect2(grid_offset, size_pixels))
@@ -182,49 +223,9 @@ func run_command(command_name: StringName, params: Dictionary, is_debug = true):
 			print_debug("Unknown command " + str(command_name) + " on " + str(self))
 	refresh()
 
-func rebuild():
-	# Active cell
-	if active_cell_node:
-		active_cell_node.queue_free()
-	active_cell_node = active_cell_scene.instantiate()
-	add_child(active_cell_node)
-	active_cell_node.visible = false
-
-	# Headers
-	for child in col_headers.get_children(): child.queue_free()
-	for child in row_headers.get_children(): child.queue_free()
-
-	col_headers.position.x = HEADER_SIZE.x + BORDER_WIDTH
-	col_headers.add_theme_constant_override("separation",-0.5 * header_drag_area_size.x)
-	row_headers.position.y = HEADER_SIZE.y + BORDER_WIDTH
-	row_headers.add_theme_constant_override("separation",-0.5 * header_drag_area_size.y)
-
-	for x in range(COLS):
-		var cell = header_cell_scene.instantiate()
-		if cell is Control:
-			cell.custom_minimum_size = Vector2(CELL_SIZE.x, HEADER_SIZE.y)
-			cell.text = char(KEY_A + (x % 25))
-			cell.set_meta("col_idx", x)
-			cell.pressed.connect(func():
-				_on_header_pressed(cell)
-			)
-			col_headers.add_child(cell)
-			col_headers.add_child(_make_header_separator(false))
-	for y in range(ROWS):
-		var cell = header_cell_scene.instantiate()
-		if cell is Control:
-			cell.custom_minimum_size = Vector2(HEADER_SIZE.x, CELL_SIZE.y)
-			cell.text = str(y+1)
-			cell.set_meta("row_idx", y)
-			cell.pressed.connect(func():
-				_on_header_pressed(cell)
-			)
-			row_headers.add_child(cell)
-			row_headers.add_child(_make_header_separator(true))
-
-	refresh()
 
 func refresh():
+	return
 	active_cell_node.visible = false
 	if active_cell_node and _selection.size():
 		active_cell_node.visible = true
