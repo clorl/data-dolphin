@@ -4,4 +4,10 @@
 
 [node name="ColHeader" instance=ExtResource("1_cu0js")]
 size_flags_vertical = 3
-script = null
+
+[node name="DM_Resizable" parent="." index="0"]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 40.0
+offset_bottom = 40.0
+allowed_resize = 10
