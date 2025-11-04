@@ -1,8 +1,8 @@
-[gd_scene load_steps=1289 format=4 uid="uid://cb8hy70reugew"]
+[gd_scene load_steps=1285 format=4 uid="uid://cb8hy70reugew"]
 
 [ext_resource type="Script" uid="uid://204dpcdh78t6" path="res://addons/data_dolphin/sheet/sheet.gd" id="1_7g2te"]
-[ext_resource type="PackedScene" uid="uid://vxcjd867qe8b" path="res://addons/data_dolphin/sheet/headers/row_header.tscn" id="2_i1akp"]
-[ext_resource type="PackedScene" uid="uid://vmilkqibs3ns" path="res://addons/data_dolphin/sheet/headers/col_header.tscn" id="3_05abr"]
+[ext_resource type="PackedScene" uid="uid://misebhpquvxj" path="res://addons/data_dolphin/sheet/headers/header_row.tscn" id="2_i1akp"]
+[ext_resource type="PackedScene" uid="uid://cm8w0mmcopjg5" path="res://addons/data_dolphin/sheet/headers/header_col.tscn" id="3_05abr"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_05abr"]
 content_margin_left = 9.0
@@ -32083,36 +32083,6 @@ Window/icons/close_pressed = SubResource("DPITexture_en7vw")
 Window/styles/embedded_border = SubResource("StyleBoxFlat_ow8bc")
 Window/styles/embedded_unfocused_border = SubResource("StyleBoxFlat_ow8bc")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dhq0o"]
-bg_color = Color(0.214876, 0.214876, 0.214876, 1)
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.4, 0.4, 0.4, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bo8xf"]
-bg_color = Color(0.167356, 0.167356, 0.167356, 1)
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.4, 0.4, 0.4, 1)
-
-[sub_resource type="GDScript" id="GDScript_qyne5"]
-script/source = "@tool
-extends Button
-"
-
-[sub_resource type="PackedScene" id="PackedScene_os5gv"]
-_bundled = {
-"conn_count": 0,
-"conns": PackedInt32Array(),
-"editable_instances": [],
-"names": PackedStringArray("CellHeader", "Button", "custom_minimum_size", "anchors_preset", "anchor_right", "anchor_bottom", "grow_horizontal", "grow_vertical", "mouse_filter", "mouse_default_cursor_shape", "theme_override_constants/outline_size", "theme_override_constants/h_separation", "theme_override_constants/icon_max_width", "theme_override_constants/align_to_largest_stylebox", "theme_override_styles/focus", "theme_override_styles/hover", "theme_override_styles/normal", "script"),
-"node_count": 1,
-"node_paths": [],
-"nodes": PackedInt32Array(-1, -1, 1, 0, -1, 16, 2, 0, 3, 1, 4, 2, 5, 3, 6, 4, 7, 5, 8, 6, 9, 7, 10, 8, 11, 9, 12, 10, 13, 11, 14, 12, 15, 13, 16, 14, 17, 15, 0),
-"variants": [Vector2(64, 21), 15, 1.0, 1.0, 2, 2, 1, 2, 0, 0, 0, 0, SubResource("StyleBoxFlat_dhq0o"), SubResource("StyleBoxFlat_bo8xf"), SubResource("StyleBoxFlat_bo8xf"), SubResource("GDScript_qyne5")],
-"version": 3
-}
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mp6x0"]
 bg_color = Color(0.221002, 0.469014, 0.819067, 1)
 draw_center = false
@@ -32182,7 +32152,7 @@ default_cell_size = Vector2(100, 22)
 row_header_width = 48.0
 row_header_scene = ExtResource("2_i1akp")
 col_header_scene = ExtResource("3_05abr")
-header_cell_scene = SubResource("PackedScene_os5gv")
+header_cell_scene = ExtResource("3_05abr")
 active_cell_scene = SubResource("PackedScene_i1akp")
 header_separator_scene = SubResource("PackedScene_05abr")
 header_drag_area_size = Vector2(10, 10)

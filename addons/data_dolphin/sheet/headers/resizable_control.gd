@@ -69,7 +69,7 @@ func _ready():
 	_reset()
 
 func _reset():
-	var s = target.size
+	var s = target.size if resize_mode == ResizeMode.Size else target.custom_minimum_size
 	_local_rect = Rect2(Vector2.ZERO, s)
 	if allowed_resize & Direction.Top:
 		_border_rects[Direction.Top] = Rect2(0.0, 0.0, s.x, resize_margin_px)

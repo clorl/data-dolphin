@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://misebhpquvxj"]
+
+[ext_resource type="Script" uid="uid://d4amgmvukr63t" path="res://addons/data_dolphin/sheet/headers/resizable_control.gd" id="1_hiees"]
+
+[node name="HeaderRow" type="Button"]
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="Resizable" type="Control" parent="." node_paths=PackedStringArray("target")]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_hiees")
+target = NodePath("..")
+allowed_resize = 5
+resize_event = 1
+resize_mode = 1
+resize_margin_px = 4

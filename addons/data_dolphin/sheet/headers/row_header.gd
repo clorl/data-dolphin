@@ -1,1 +1,0 @@
-class_name DM_RowHeader extends DM_SheetHeader
