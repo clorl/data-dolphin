@@ -5,13 +5,15 @@
 [node name="HeaderCol" type="Button"]
 offset_right = 8.0
 offset_bottom = 8.0
+mouse_filter = 1
 
 [node name="Resizable" type="Control" parent="." node_paths=PackedStringArray("target")]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 1
 script = ExtResource("1_f84ii")
 target = NodePath("..")
-allowed_resize = 10
+allowed_resize = 2
 resize_event = 1
 resize_mode = 1
