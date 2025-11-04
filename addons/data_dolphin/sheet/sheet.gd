@@ -29,6 +29,11 @@ const ROWS = 100
 @export var header_drag_area_size := Vector2(10, 24) # The size of the area you grab to resize cols and rows
 @export var selection_stylebox: StyleBox
 
+@onready var corner = $Grid/Corner
+@onready var cols = $Grid/Cols
+@onready var rows = $Grid/Rows
+@onready var content = $Grid/Content
+
 var cell_data := {}
 var cell_format := {}
 
@@ -43,8 +48,8 @@ var pos = Vector2(150, 72)
 
 var active_cell_node: Control
 
-@onready var col_headers: HBoxContainer = $Cols
-@onready var row_headers: VBoxContainer = $Rows
+@onready var col_headers: HBoxContainer = $Grid/Cols
+@onready var row_headers: VBoxContainer = $Grid/Rows
 
 var _resize_state = ResizeState.NONE
 var _resize_start_pos = Vector2.ZERO
@@ -54,15 +59,15 @@ var _resize_delta = 0
 var _selection: Array[Rect2i] = []
 
 func rebuild():
-	%Corner.custom_minimum_size = Vector2(row_header_width, default_cell_size.y)
-	%Rows.custom_minimum_size.x = row_header_width
-	%Cols.custom_minimum_size.y = default_cell_size.y
+	corner.custom_minimum_size = Vector2(row_header_width, default_cell_size.y)
+	rows.custom_minimum_size.x = row_header_width
+	cols.custom_minimum_size.y = default_cell_size.y
 	
 	# Instantiate sheet headers 
 	# TODO: Implement pooling
-	for child in %Rows.get_children():
+	for child in rows.get_children():
 		child.queue_free()
-	for child in %Cols.get_children():
+	for child in cols.get_children():
 		child.queue_free()
 	
 	var i = 0
@@ -71,13 +76,13 @@ func rebuild():
 			var inst = col_header_scene.instantiate()
 			inst.text = str(i)
 			inst.custom_minimum_size = default_cell_size
-			%Cols.add_child(inst)
+			cols.add_child(inst)
 		
 		if i < cell_count.y:
 			var inst = row_header_scene.instantiate()
 			inst.text = str(i)
 			inst.custom_minimum_size = Vector2(row_header_width, default_cell_size.y)
-			%Rows.add_child(inst)
+			rows.add_child(inst)
 
 		i += 1
 	refresh()

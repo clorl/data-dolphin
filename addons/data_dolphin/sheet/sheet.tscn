@@ -32172,13 +32172,9 @@ border_width_bottom = 1
 border_color = Color(0.337255, 0.615686, 0.996078, 1)
 
 [node name="Sheet" type="ScrollContainer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 2
-size_flags_vertical = 0
+clip_contents = false
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme = SubResource("EditorTheme_0fipv")
 script = ExtResource("1_7g2te")
 cell_count = Vector2i(20, 100)
@@ -32199,7 +32195,6 @@ theme_override_constants/v_separation = 1
 columns = 2
 
 [node name="Corner" type="Control" parent="Grid"]
-unique_name_in_owner = true
 custom_minimum_size = Vector2(48, 22)
 layout_mode = 2
 
@@ -32212,21 +32207,18 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Cols" type="HBoxContainer" parent="Grid"]
-unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 22)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 1
 
 [node name="Rows" type="VBoxContainer" parent="Grid"]
-unique_name_in_owner = true
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 1
 
 [node name="Content" type="VBoxContainer" parent="Grid"]
-unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
