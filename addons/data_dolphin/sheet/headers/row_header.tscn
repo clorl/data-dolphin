@@ -1,11 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://vxcjd867qe8b"]
+[gd_scene load_steps=2 format=3 uid="uid://vxcjd867qe8b"]
 
 [ext_resource type="PackedScene" uid="uid://qb3asw8slbq2" path="res://addons/data_dolphin/sheet/headers/sheet_header.tscn" id="1_c6l24"]
-[ext_resource type="Script" uid="uid://qcbdrv3dqufn" path="res://addons/data_dolphin/sheet/headers/row_header.gd" id="2_kd85e"]
 
 [node name="RowHeader" instance=ExtResource("1_c6l24")]
 offset_right = 83.0
 offset_bottom = 77.0
 size_flags_horizontal = 3
-script = ExtResource("2_kd85e")
-allow_resize_vertical = true
+script = null

@@ -1,10 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://vmilkqibs3ns"]
+[gd_scene load_steps=2 format=3 uid="uid://vmilkqibs3ns"]
 
 [ext_resource type="PackedScene" uid="uid://qb3asw8slbq2" path="res://addons/data_dolphin/sheet/headers/sheet_header.tscn" id="1_cu0js"]
-[ext_resource type="Script" uid="uid://d2lwvaw1s5am6" path="res://addons/data_dolphin/sheet/headers/col_header.gd" id="2_cf4u6"]
 
 [node name="ColHeader" instance=ExtResource("1_cu0js")]
 size_flags_vertical = 3
-script = ExtResource("2_cf4u6")
-allow_resize_horizontal = true
-allow_resize_vertical = true
+script = null

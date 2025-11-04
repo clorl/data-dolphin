@@ -1,10 +1,20 @@
 [gd_scene load_steps=2 format=3 uid="uid://qb3asw8slbq2"]
 
-[ext_resource type="Script" uid="uid://beic8qql4xv6m" path="res://addons/data_dolphin/sheet/headers/sheet_header.gd" id="1_h5kkv"]
+[ext_resource type="Script" uid="uid://d4amgmvukr63t" path="res://addons/data_dolphin/sheet/headers/resizable_control.gd" id="1_h5kkv"]
 
 [node name="SheetHeader" type="Button"]
 offset_right = 156.0
 offset_bottom = 130.0
+mouse_filter = 1
+
+[node name="DM_Resizable" type="Control" parent="." node_paths=PackedStringArray("target")]
+anchors_preset = 0
+offset_left = 51.0
+offset_top = 53.0
+offset_right = 91.0
+offset_bottom = 93.0
 script = ExtResource("1_h5kkv")
-cursor_resizeh = 10
-cursor_resizev = 9
+target = NodePath("..")
+allowed_resize = 15
+debug = true
+metadata/_custom_type_script = "uid://d4amgmvukr63t"

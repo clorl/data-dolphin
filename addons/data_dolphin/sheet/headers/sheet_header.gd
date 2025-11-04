@@ -1,15 +1,22 @@
 @tool
 class_name DM_SheetHeader extends Button
 
+enum Direction {
+	None = 0,
+	Top = 1,
+	Right = 1 << 1,
+	Down = 1 << 2,
+	Left = 1 << 3
+}
+
 signal resize_drag_started(node: Control, side: int)
 signal resize_drag_updated(node: Control, side: int, delta: Vector2)
 signal resize_drag_finished(node: Control, side: int, delta: Vector2)
 
+@export_flags("Top:1,Right:2,Down:4,Left:8") var allowed_resize = 0
 @export var resize_margin_px = 12
 @export var cursor_resizeh: CursorShape
 @export var cursor_resizev: CursorShape
-@export var allow_resize_horizontal = false
-@export var allow_resize_vertical = false
 @export var debug = false
 
 var _hrect: Rect2
@@ -36,8 +43,6 @@ func _input(event):
 		var i = 0
 		_hovered_rect = -1
 		for r in _border_rects:
-			if i % 2 == 0 and not allow_resize_vertical: continue
-			if i % 2 != 0 and not allow_resize_horizontal: continue
 			if r.has_point(mouse):
 				_hovered_rect = i
 				break
@@ -52,19 +57,22 @@ func _input(event):
 
 		if _resize_state >= 0:
 			resize_drag_updated.emit(self, _resize_state, mouse - _resize_start_mousepos)
-			print("Drag update")
+			if debug:
+				print("Drag update")
 
 		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 			if _resize_state != _hovered_rect:
 				if _resize_state <= -1 and event.pressed:
 					_resize_state = _hovered_rect
 					resize_drag_finished.emit(self, _resize_state)
-					print("Drag Start")
+					if debug:
+						print("Drag Start")
 			if not event.pressed and _resize_state > -1:
 				_resize_start_mousepos = mouse
 				resize_drag_started.emit(self, _resize_state, mouse - _resize_start_mousepos)
 				_resize_state = -1
-				print("Drag End")
+				if debug:
+					print("Drag End")
 
 		queue_redraw()
 
