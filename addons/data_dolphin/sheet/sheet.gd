@@ -58,6 +58,8 @@ var _resize_delta = 0
 
 var _selection: Array[Rect2i] = []
 
+var resize_hint = $ResizeHint
+
 func rebuild():
 	corner.custom_minimum_size = Vector2(row_header_width, default_cell_size.y)
 	rows.custom_minimum_size.x = row_header_width
