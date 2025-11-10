@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bjdspgr37fjl3"]
+
+[ext_resource type="Script" uid="uid://c3wfugsk5y5dl" path="res://addons/data_dolphin/res_editor/collection_editor.gd" id="1_4err1"]
+
+[node name="CollectionEditor" type="VBoxContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_4err1")

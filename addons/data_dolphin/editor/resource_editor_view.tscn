@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://c818bae1ogmwq"]
+
+[ext_resource type="Script" uid="uid://02kr0d7k14bv" path="res://addons/data_dolphin/editor/resource_editor_view.gd" id="1_o68yr"]
+[ext_resource type="PackedScene" uid="uid://dsd3vcsshh2tg" path="res://addons/data_dolphin/res_editor/resource_editor.tscn" id="2_h1510"]
+
+[node name="ResourceEditorView" type="Control"]
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+script = ExtResource("1_o68yr")
+
+[node name="ResourceEditor" parent="." instance=ExtResource("2_h1510")]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+size_flags_vertical = 3

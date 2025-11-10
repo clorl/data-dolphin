@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://dquhyq44n4oco"]
+
+[ext_resource type="PackedScene" uid="uid://btrlcgvm4usyi" path="res://addons/data_dolphin/sheet/cells/cell.tscn" id="1_mfgs1"]
+[ext_resource type="Script" uid="uid://drsqai128m0ho" path="res://addons/data_dolphin/sheet/cells/cell_text.gd" id="2_4duj2"]
+
+[node name="CellText" instance=ExtResource("1_mfgs1")]
+custom_minimum_size = Vector2(100, 24)
+script = ExtResource("2_4duj2")
+
+[node name="Read" parent="." index="0"]
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Read" index="0"]
+layout_mode = 2
+text = "Text Cell"
+
+[node name="Write" parent="." index="1"]
+size_flags_horizontal = 3
+
+[node name="TextEdit" type="TextEdit" parent="Write" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+context_menu_enabled = false
+emoji_menu_enabled = false
+drag_and_drop_selection_enabled = false
+virtual_keyboard_enabled = false
+virtual_keyboard_show_on_focus = false
+middle_mouse_paste_enabled = false
+empty_selection_clipboard_enabled = false
+autowrap_mode = 1
+tab_input_mode = false

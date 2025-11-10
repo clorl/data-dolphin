@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://btrlcgvm4usyi"]
+
+[ext_resource type="Script" uid="uid://b2buoct0yhqms" path="res://addons/data_dolphin/sheet/cells/cell.gd" id="1_yqta3"]
+
+[node name="Cell" type="HBoxContainer"]
+offset_right = 4.0
+script = ExtResource("1_yqta3")
+
+[node name="Read" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Write" type="HBoxContainer" parent="."]
+layout_mode = 2
