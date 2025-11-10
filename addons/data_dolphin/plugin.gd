@@ -21,6 +21,7 @@ func _exit_tree() -> void:
 	Engine.remove_meta("DataManager")
 
 func _ready():
+	_make_visible(false)
 	pass
 
 func _has_main_screen() -> bool:
@@ -40,7 +41,14 @@ func _get_plugin_icon() -> Texture2D:
 
 ## TODO implement func _handles(object) -> bool:
 func _handles(object):
-	return object is Resource
+	if not object is Resource:
+		return false
+
+	if object is PackedScene or \
+		object is Script:
+		return false
+
+	return true
 
 func _edit(object):
 	if is_instance_valid(main_view):

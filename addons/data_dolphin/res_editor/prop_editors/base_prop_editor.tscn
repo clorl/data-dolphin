@@ -1,27 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://bkthf3154pnk5"]
 
-[ext_resource type="Script" uid="uid://d4ia300gnbi57" path="res://addons/data_dolphin/res_editor/prop_editors/prop_editor.gd" id="1_1dxov"]
+[ext_resource type="Script" uid="uid://bi6almvsi8klp" path="res://addons/data_dolphin/res_editor/prop_editors/prop_editor.gd" id="1_1dxov"]
 
-[node name="BasePropEditor" type="Control" node_paths=PackedStringArray("label_node", "val_node")]
+[node name="BasePropEditor" type="Control"]
 custom_minimum_size = Vector2(100, 52)
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_1dxov")
-label_node = NodePath("Label")
-val_node = NodePath("TextEdit")
-
-[node name="TextEdit" type="TextEdit" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 17.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_right = 100.0
-offset_bottom = 23.0
-size_flags_vertical = 1

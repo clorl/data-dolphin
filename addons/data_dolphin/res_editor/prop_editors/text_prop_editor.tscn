@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://2wmr3o0obktl"]
+
+[ext_resource type="PackedScene" uid="uid://bkthf3154pnk5" path="res://addons/data_dolphin/res_editor/prop_editors/base_prop_editor.tscn" id="1_n6nqh"]
+[ext_resource type="Script" uid="uid://d4ia300gnbi57" path="res://addons/data_dolphin/res_editor/prop_editors/text_prop_editor.gd" id="2_vwod1"]
+
+[node name="TextPropEditor" node_paths=PackedStringArray("label_node", "val_node") instance=ExtResource("1_n6nqh")]
+script = ExtResource("2_vwod1")
+with_label = true
+label_node = NodePath("Label")
+val_node = NodePath("TextEdit")
+
+[node name="TextEdit" type="TextEdit" parent="." index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="." index="1"]
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 23.0
+size_flags_vertical = 1

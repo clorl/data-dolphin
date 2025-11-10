@@ -20,8 +20,8 @@ func rebuild():
 	_props = {}
 	for p in _get_props():
 		var inst = PropEditor.instantiate()
-		inst.label = p.name
-		inst.value = p.value
+		inst.set_name(p.name)
+		inst.set_value(p.value)
 		inst.changed.connect(_prop_changed)
 		inst.custom_minimum_size = min_prop_size
 		_props[p.name] = p
@@ -32,8 +32,8 @@ func refresh():
 	for p in _props.values():
 		if not p.control:
 			continue
-		p.control.label = p.name
-		p.control.value = resource[p.name]
+		p.control.set_name(p.name)
+		p.control.set_value(resource[p.name])
 
 func _prop_changed(propname, new_val):
 	changed.emit(propname, new_val)

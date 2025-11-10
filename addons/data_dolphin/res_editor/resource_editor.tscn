@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dsd3vcsshh2tg"]
 
 [ext_resource type="Script" uid="uid://bg3pxo6d31pj5" path="res://addons/data_dolphin/res_editor/resource_editor.gd" id="1_1fgyt"]
-[ext_resource type="PackedScene" uid="uid://bkthf3154pnk5" path="res://addons/data_dolphin/res_editor/prop_editors/base_prop_editor.tscn" id="2_sw1t1"]
+[ext_resource type="PackedScene" uid="uid://2wmr3o0obktl" path="res://addons/data_dolphin/res_editor/prop_editors/text_prop_editor.tscn" id="2_sw1t1"]
 
 [node name="ResourceEditor" type="HFlowContainer"]
 alignment = 1

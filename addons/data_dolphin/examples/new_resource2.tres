@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="DM_ExampleItem" load_steps=2 format=3 uid="uid://w2m5f571q4jd"]
+
+[ext_resource type="Script" uid="uid://de8c3t6k7t3cu" path="res://addons/data_dolphin/examples/item.gd" id="1_2sbca"]
+
+[resource]
+script = ExtResource("1_2sbca")
+metadata/_custom_type_script = "uid://de8c3t6k7t3cu"
