@@ -3,61 +3,56 @@
 [ext_resource type="Script" uid="uid://02kr0d7k14bv" path="res://addons/data_dolphin/editor/resource_editor_view.gd" id="1_o68yr"]
 [ext_resource type="PackedScene" uid="uid://dsd3vcsshh2tg" path="res://addons/data_dolphin/res_editor/resource_editor.tscn" id="2_h1510"]
 
-[node name="ResourceEditorView" type="VBoxContainer"]
+[node name="ResourceEditorView" type="PanelContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 mouse_filter = 2
 script = ExtResource("1_o68yr")
+metadata/_edit_use_anchors_ = true
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/margin_left = 12
-theme_override_constants/margin_right = 12
-theme_override_constants/margin_bottom = 12
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Toolbar" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="Toolbar" type="HBoxContainer" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="MenuButton" type="MenuButton" parent="MarginContainer/VBoxContainer/Toolbar"]
+[node name="MenuButton" type="MenuButton" parent="VBoxContainer/Toolbar"]
 layout_mode = 2
 text = "Fichier"
 
-[node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer/VBoxContainer"]
+[node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HSplitContainer"]
-custom_minimum_size = Vector2(100, 100)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.2
-
-[node name="LineEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HSplitContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer"]
+custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 
-[node name="OpenedResources" type="ItemList" parent="MarginContainer/VBoxContainer/HSplitContainer/VBoxContainer"]
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/HSplitContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="OpenedResources" type="ItemList" parent="VBoxContainer/HSplitContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_type_variation = &"ItemListSecondary"
 auto_height = true
-item_count = 3
-item_0/text = "Foo.tres"
-item_1/text = "Bar.tres"
-item_2/text = "Baz.tres"
 
-[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/HSplitContainer/VBoxContainer"]
+[node name="Spacer" type="Control" parent="VBoxContainer/HSplitContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ResourceEditor" parent="MarginContainer/VBoxContainer/HSplitContainer" instance=ExtResource("2_h1510")]
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+draw_focus_border = true
+
+[node name="ResourceEditor" parent="VBoxContainer/HSplitContainer/ScrollContainer" instance=ExtResource("2_h1510")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
