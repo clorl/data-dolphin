@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://c818bae1ogmwq"]
+[gd_scene load_steps=5 format=3 uid="uid://c818bae1ogmwq"]
 
 [ext_resource type="Script" uid="uid://02kr0d7k14bv" path="res://addons/data_dolphin/editor/resource_editor_view.gd" id="1_o68yr"]
 [ext_resource type="PackedScene" uid="uid://dsd3vcsshh2tg" path="res://addons/data_dolphin/res_editor/resource_editor.tscn" id="2_h1510"]
+[ext_resource type="Script" uid="uid://d17kgqa6wsysr" path="res://addons/data_dolphin/res_editor/main_view/tabs.gd" id="2_lig14"]
+[ext_resource type="Script" uid="uid://46sdbe4nstes" path="res://addons/data_dolphin/res_editor/main_view/context_menu.gd" id="4_oadkq"]
 
 [node name="ResourceEditorView" type="PanelContainer"]
 anchors_preset = 15
@@ -11,7 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-mouse_filter = 2
+theme_type_variation = &"panel"
 script = ExtResource("1_o68yr")
 metadata/_edit_use_anchors_ = true
 
@@ -25,6 +27,15 @@ layout_mode = 2
 [node name="MenuButton" type="MenuButton" parent="VBoxContainer/Toolbar"]
 layout_mode = 2
 text = "Fichier"
+item_count = 4
+popup/item_0/text = "New resource"
+popup/item_0/id = 0
+popup/item_1/text = "New collection"
+popup/item_1/id = 1
+popup/item_2/text = "Open"
+popup/item_2/id = 2
+popup/item_3/text = "Recent"
+popup/item_3/id = 3
 
 [node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -36,24 +47,38 @@ layout_mode = 2
 
 [node name="LineEdit" type="LineEdit" parent="VBoxContainer/HSplitContainer/VBoxContainer"]
 layout_mode = 2
+placeholder_text = "Filtrer"
 
 [node name="OpenedResources" type="ItemList" parent="VBoxContainer/HSplitContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 3
 theme_type_variation = &"ItemListSecondary"
 auto_height = true
-
-[node name="Spacer" type="Control" parent="VBoxContainer/HSplitContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
+script = ExtResource("2_lig14")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/HSplitContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-draw_focus_border = true
 
 [node name="ResourceEditor" parent="VBoxContainer/HSplitContainer/ScrollContainer" instance=ExtResource("2_h1510")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_type_variation = &"ItemListSecondary"
+
+[node name="ContextMenu" type="PopupMenu" parent="."]
+oversampling_override = 1.0
+submenu_popup_delay = 0.1
+item_count = 3
+item_0/text = "Foo"
+item_0/id = 0
+item_1/text = "Bar"
+item_1/id = 1
+item_2/text = "Baz"
+item_2/id = 2
+script = ExtResource("4_oadkq")
+
+[connection signal="right_click" from="VBoxContainer/HSplitContainer/VBoxContainer/OpenedResources" to="." method="context_menu"]
